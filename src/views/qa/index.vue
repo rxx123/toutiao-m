@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">登录页面</div>
+  <div class="login-container">qa页面</div>
 </template>
 
 <script>

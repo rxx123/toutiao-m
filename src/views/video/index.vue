@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container"></div>
+  <div class="login-container">video页面</div>
 </template>
 
 <script>
