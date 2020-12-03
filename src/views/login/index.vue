@@ -104,13 +104,13 @@ export default {
       })
       try {
         const res = await login(this.user)
-        console.log('登录成功', res)
+        // console.log('登录成功', res)
         this.$toast.success('登录成功')
         this.$store.commit('setUser', res.data.data)
         this.$router.back()
       } catch (err) {
         if (err.response.status === 400) {
-          console.log('登录失败', err)
+          // console.log('登录失败', err)
           this.$toast.fail('登录失败，手机号或验证码错误')
         }
       }
