@@ -15,11 +15,11 @@
     <!-- /搜索历史记录 -->
 
     <!-- 联想建议 -->
-    <search-suggestion v-else-if="searchText" :search-text="searchText"/>
+    <search-suggestion v-else-if="searchText" :search-text="searchText" @search="onSearch"/>
     <!-- /联想建议 -->
 
     <!-- 历史记录 -->
-    <search-history v-else/>
+    <search-history v-else :search-histories="searchHistories" @search="onSearch" @update-histories="searchHistories = $event"/>
     <!-- /历史记录 -->
   </div>
 </template>
@@ -28,6 +28,9 @@
 import SearchHistory from './components/search-history'
 import SearchSuggestion from './components/search-suggestion'
 import SearchResult from './components/search-result'
+import { getItem, setItem } from '@/utils/storage'
+import { getSearchHistories } from '@/api/search'
+import { mapState } from 'vuex'
 export default {
   name: 'SearchIndex',
   components: {
@@ -40,12 +43,19 @@ export default {
     return {
       searchText: '',
       isResultShow: false,
-      searchHistories: []
+      searchHistories: getItem('serach-histories') || []
     }
   },
-  computed: {},
-  watch: {},
+  computed: {
+    ...mapState(['user'])
+  },
+  watch: {
+    searchHistories () {
+      setItem('serach-histories', this.searchHistories)
+    }
+  },
   created () {
+    this.loadSearchHistories()
   },
   mounted () {
   },
@@ -62,11 +72,24 @@ export default {
       }
       this.searchHistories.unshift(val)
 
+      // 同步到本地存储
+      // setItem('serach-histories', this.searchHistories)
       // 渲染搜索结果
       this.isResultShow = true
     },
     onCancel () {
       console.log('取消')
+    },
+    async loadSearchHistories () {
+      let localHistories = getItem('serach-histories') || []
+      if (this.user) {
+        const { data } = await getSearchHistories()
+        localHistories = [...new Set([
+          ...localHistories,
+          ...data.data.keywords
+        ])]
+      }
+      this.searchHistories = localHistories
     }
   }
 }

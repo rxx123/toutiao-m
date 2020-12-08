@@ -6,7 +6,7 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-cell v-for="item in list" :key="item" :title="item" />
+      <van-cell v-for="(item, index) in list" :key="index" :title="item.title" />
     </van-list>
   </div>
 </template>

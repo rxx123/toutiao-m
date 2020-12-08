@@ -18,3 +18,9 @@ export const getSearchSuggestions = q => {
     }
   })
 }
+export const getSearchHistories = () => {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/search/histories'
+  })
+}
