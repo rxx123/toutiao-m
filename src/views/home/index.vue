@@ -42,7 +42,7 @@ export default {
   props: {},
   data () {
     return {
-      active: 2,
+      active: 0,
       channels: [],
       isChannelEditShow: false
     }
