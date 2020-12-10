@@ -58,6 +58,7 @@ export default {
         content: this.message, // 评论的内容
         art_id: this.articleId ? this.articleId.toString() : null // 文章id，对评论内容发表回复时，需要传递此参数，表明所属文章id。对文章进行评论，不要传此参数。
       })
+      console.log(data)
       this.$emit('post-success', data.data.new_obj)
       this.$toast.success('发布成功')
       // 发布成功，清空文本框内容

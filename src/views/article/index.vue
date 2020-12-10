@@ -31,7 +31,8 @@
       <div class="markdown-body" v-html="article.content" ref="article-content">
       </div>
       <!-- 文章评论列表 -->
-      <comment-list :source="articleId" @reply-click="onReplyClick"/>
+      <comment-list :source="articleId" @reply-click="onReplyClick" :list="commentList"
+      @update-total-count="totalCommentCount = $event"/>
       <!-- /文章评论列表 -->
     </div>
     <!-- 底部区域 -->
@@ -201,7 +202,7 @@ export default {
       this.isPostShow = false
     },
     onReplyClick (comment) {
-      console.log('onReplyClick', comment)
+      // console.log('onReplyClick', comment)
       this.replyComment = comment
       // 展示回复内容
       this.isReplyShow = true

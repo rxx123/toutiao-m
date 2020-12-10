@@ -17,7 +17,7 @@
     </van-list>
   </div>
 </template>
-
+//1322815756211060736
 <script>
 import { getComments } from '@/api/comment'
 import CommentItem from './comment-item'
@@ -30,11 +30,22 @@ export default {
     source: {
       type: [Number, String, Object],
       required: true
+    },
+    type: {
+      type: String,
+      default: 'a'
+    },
+    list: {
+      type: Array,
+      default: () => []
+      // default: function () {
+      //   return []
+      // }
     }
   },
   data () {
     return {
-      list: [],
+      // list: [],
       loading: false,
       finished: false,
       offset: null,
@@ -48,15 +59,16 @@ export default {
   methods: {
     async onLoad () {
       const { data } = await getComments({
-        type: 'a',
+        type: this.type,
         source: this.source.toString(),
         offset: this.offset,
         limit: this.limit
       })
+      this.$emit('update-total-count', data.data.total_count)
       const { results } = data.data
       this.list.push(...results)
       this.loading = false
-      console.log(results)
+      // console.log(results)
       if (results.length) {
         this.offset = data.data.last_id
       } else {
