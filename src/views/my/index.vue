@@ -2,7 +2,15 @@
   <div class="my-container">
     <van-cell-group v-if="user" class="my-info">
       <van-cell center class="base-info" :border="false">
-        <van-image class="avatar" slot="icon" round fit="cover" :src="currentUser.photo" />
+        <van-image class="avatar" slot="icon" round fit="cover"
+        :src="currentUser.photo"
+        @click="$router.push({
+          name: 'user',
+          param: {
+            userId: currentUser.id
+          }
+        })"
+        />
         <div class="name" slot="title">{{currentUser.intro}}</div>
         <van-button class="update-btn" size="small" round to="/user/profile">编辑资料</van-button>
       </van-cell>
@@ -15,7 +23,13 @@
     </van-cell-group>
 
     <div v-else class="not-login">
-      <div @click="$router.push('/login')">
+      <!-- <div @click="$router.push('/login')"> -->
+      <div @click="$router.push({
+        name: 'login',
+        query: {
+          redirect: '/my'
+        }
+      })">
         <img src="./mobile.png" class="mobile">
       </div>
       <div class="text">登录/注册</div>
@@ -26,7 +40,7 @@
     </van-grid>
 
     <van-cell title="消息通知" is-link to="/" />
-    <van-cell title="小智同学" class="mb-4" is-link to="/" />
+    <van-cell title="小智同学" class="mb-4" is-link to="/user/chat" />
     <van-cell v-if="user" title="退出登录" class="logout-cell" @click="onLogout"/>
   </div>
 </template>
@@ -70,6 +84,9 @@ export default {
         .catch(() => {
           // on cancel
         })
+    },
+    gotoUser () {
+      // this.$router.push({ name: 'user', params: { userId: this.currentUser.id } })
     }
   }
 }

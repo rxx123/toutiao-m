@@ -107,7 +107,9 @@ export default {
         // console.log('登录成功', res)
         this.$toast.success('登录成功')
         this.$store.commit('setUser', res.data.data)
-        this.$router.back()
+        this.$store.commit('removeCachePage', 'LayoutIndex')
+        // this.$router.back()
+        this.$router.push(this.$route.query.redirect || '/')
       } catch (err) {
         if (err.response.status === 400) {
           // console.log('登录失败', err)

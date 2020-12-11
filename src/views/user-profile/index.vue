@@ -8,11 +8,19 @@
       @click-left="$router.back()"
     />
     <!-- /导航栏 -->
+     <input
+      type="file"
+      hidden
+      accept="image/*"
+      ref="file"
+      @change="onFileChange"
+    >
     <van-cell-group>
       <van-cell
         title="头像"
         is-link
-        @click="isEditPhotoShow = true"
+        center
+        @click="$refs.file.click()"
       >
         <van-image
           round
